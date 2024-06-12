@@ -11,8 +11,6 @@ class RestApiStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        # The code that defines your stack goes here
-
         # example resource
         # queue = sqs.Queue(
         #     self, "ApiTestCdkQueue",
@@ -27,10 +25,14 @@ class RestApiStack(Stack):
             handler="main.handler"
         )
 
-        dynamo_table = aws_dynamodb.Table(
+        dynamo_table = aws_dynamodb.TableV2(
             self,
-            "restapi_dynamo_table",
-            partition_key=aws_dynamodb.Attribute(name="id", type=aws_dynamodb.AttributeType.STRING)
+            "restapi_dynamodb_global_table",
+            partition_key=aws_dynamodb.Attribute(name="pk", type=aws_dynamodb.AttributeType.STRING),
+            replicas=[
+                aws_dynamodb.ReplicaTableProps(region="us-east-2"),
+                aws_dynamodb.ReplicaTableProps(region="us-west-2")
+            ]
         )
         
         dynamo_table.grant_read_write_data(restapi_lambda)
