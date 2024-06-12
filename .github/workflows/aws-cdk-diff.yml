@@ -1,0 +1,39 @@
+name: aws-cdk-diff
+
+on:
+  # push:
+  #   branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "github.event_name = ${{ github.event_name }}"
+      - run: echo "runner.os = ${{ runner.os }}"
+      - run: echo "github.ref = ${{ github.ref }}"
+      - run: echo "github.repository = ${{ github.repository }}"
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      - name: Install Python dependencies and CDK
+        run: |
+          npm install -g aws-cdk
+          # source .venv/bin/activate
+          # python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: "us-east-1"
+      - name: cdk diff
+        run: cdk diff --app="python3 ${PWD}/app.py"
