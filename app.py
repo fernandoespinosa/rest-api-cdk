@@ -3,7 +3,7 @@ import os
 
 import aws_cdk as cdk
 
-from rest_api_cdk.api_test_cdk_stack import ApiTestCdkStack
+from rest_api_cdk.rest_api_stack import ApiTestCdkStack
 
 
 app = cdk.App()
