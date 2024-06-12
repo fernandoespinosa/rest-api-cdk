@@ -22,7 +22,7 @@ class RestApiStack(Stack):
         dynamodb_table = aws_dynamodb.TableV2(
             self,
             "restapi_dynamodb_global_table",
-            partition_key=aws_dynamodb.Attribute(name="pk", type=aws_dynamodb.AttributeType.STRING),
+            partition_key=aws_dynamodb.Attribute(name="id", type=aws_dynamodb.AttributeType.STRING),
             replicas=[
                 aws_dynamodb.ReplicaTableProps(region="us-east-2"),
                 aws_dynamodb.ReplicaTableProps(region="us-west-2")

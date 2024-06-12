@@ -1,5 +1,4 @@
-
-# Architecture overview
+# Architecture Summary
 
 This stack quickly provisions:
 
@@ -14,14 +13,16 @@ entails the following consistency-vs-availability considerations:
 
 > Transactional operations provide ACID guarantees only within the region where the write is made originally. Transactions are not supported across regions in global tables
 
+# Infrastructure Code
+
+All code is contained
+
 # CI/CD Pipeline:
 
-Along with the AWS CDK stack, 3 GitHub actions have been provided that perform the following
-CI/CD tasks if the repository is hosted on GitHub:
+Along with the AWS CDK stack, 3 GitHub actions have been provided under the `.github/` directory that perform the following CI/CD tasks if the repository is hosted on GitHub:
 
 1. `aws-cdk-diff`: is run during Pull-Requests and simply checks for changes via `cdk diff`
-1. `aws-cdk-deploy`: is run during only on merge actions to the `master` branch and deploys
-infrastructure via `cdk deploy --require-approval=never`
+1. `aws-cdk-deploy`: is run during only on merge actions to the `master` branch and deploys infrastructure via `cdk deploy --require-approval=never`
 1. `aws-cdk-destroy`: is run during only manually and destroys infrastructure via `cdk destroy --force`
 
 All workflows set up the build environment by deploying Python 3.12 and Node 18 on a basic environment based on `ubuntu-latest`, and then installing the `aws-cdk` along with the project `pip` dependencies.
