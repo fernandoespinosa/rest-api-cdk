@@ -1,5 +1,5 @@
 from aws_cdk import (
-    Stack,
+    Stack, RemovalPolicy,
     aws_lambda,
     aws_dynamodb,
     aws_apigateway
@@ -25,19 +25,20 @@ class RestApiStack(Stack):
             handler="main.handler"
         )
 
-        dynamo_table = aws_dynamodb.TableV2(
+        dynamodb_table = aws_dynamodb.TableV2(
             self,
             "restapi_dynamodb_global_table",
             partition_key=aws_dynamodb.Attribute(name="pk", type=aws_dynamodb.AttributeType.STRING),
             replicas=[
                 aws_dynamodb.ReplicaTableProps(region="us-east-2"),
                 aws_dynamodb.ReplicaTableProps(region="us-west-2")
-            ]
+            ],
+            removal_policy=RemovalPolicy.DESTROY
         )
         
-        dynamo_table.grant_read_write_data(restapi_lambda)
+        dynamodb_table.grant_read_write_data(restapi_lambda)
         
-        restapi_lambda.add_environment("DYNAMO_TABLE", dynamo_table.table_name)
+        restapi_lambda.add_environment("DYNAMO_TABLE", dynamodb_table.table_name)
         
         api = aws_apigateway.LambdaRestApi(
             self,
