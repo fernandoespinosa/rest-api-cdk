@@ -3,11 +3,11 @@ import os
 
 import aws_cdk as cdk
 
-from rest_api_cdk.rest_api_stack import ApiTestCdkStack
+from rest_api_cdk.rest_api_stack import RestApiStack
 
 
 app = cdk.App()
-ApiTestCdkStack(app, "ApiTestCdkStack",
+RestApiStack(app, "ApiTestCdkStack",
     # If you don't specify 'env', this stack will be environment-agnostic.
     # Account/Region-dependent features and context lookups will not work,
     # but a single synthesized template can be deployed anywhere.
