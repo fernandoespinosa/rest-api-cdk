@@ -11,12 +11,6 @@ class RestApiStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        # example resource
-        # queue = sqs.Queue(
-        #     self, "ApiTestCdkQueue",
-        #     visibility_timeout=Duration.seconds(300),
-        # )
-
         restapi_lambda = aws_lambda.Function(
             self,
             "restapi_lambda",
