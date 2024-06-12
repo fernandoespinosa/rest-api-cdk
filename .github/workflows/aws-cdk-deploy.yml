@@ -1,10 +1,10 @@
-name: AWS CDK CI/CD
+name: aws-cdk-deploy
 
 on:
   push:
     branches: [master]
-  pull_request:
-    branches: [master]
+  # pull_request:
+  #   branches: [master]
 
 jobs:
   build:
@@ -35,7 +35,5 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: "us-east-1"
-      - name: Deploy to AWS
+      - name: cdk deploy
         run: cdk deploy --app="python3 ${PWD}/app.py" --require-approval=never
-      - name: Destroy stack
-        run: cdk destroy --app="python3 ${PWD}/app.py" --force
