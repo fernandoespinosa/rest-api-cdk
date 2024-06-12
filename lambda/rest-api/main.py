@@ -15,10 +15,10 @@ dynamodb_client = boto3.client("dynamodb")
 
 def handler(event, context):
     table = os.environ.get("DYNAMO_TABLE")
-    logging.info(f"## Loaded table name from environemt variable DDB_TABLE: {table}")
+    logging.info(f"## DYNAMO_TABLE: {table}")
     if event["body"]:
         item = json.loads(event["body"])
-        logging.info(f"## Received payload: {item}")
+        logging.info(f"## event.body: {item}")
         year = str(item["year"])
         title = str(item["title"])
         id = str(item["id"])
@@ -33,12 +33,12 @@ def handler(event, context):
             "body": json.dumps({"message": message}),
         }
     else:
-        logging.info("## Received request without a payload")
+        logging.info("## event.body: NONE")
         dynamodb_client.put_item(
             TableName=table,
             Item={
-                "year": {"N": "2012"},
-                "title": {"S": "The Amazing Spider-Man 2"},
+                "year": {"N": "2024"},
+                "title": {"S": "default"},
                 "id": {"S": str(uuid.uuid4())},
             },
         )
