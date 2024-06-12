@@ -15,7 +15,7 @@ entails the following consistency-vs-availability considerations:
 
 # Infrastructure Code
 
-All code is contained
+AWS CDK code is contained in the `rest_api_cdk/` directory. The code run by the lambda function is very simple and for demo purposes and is containe in the `lambda/rest-api/` directory.
 
 # CI/CD Pipeline:
 
