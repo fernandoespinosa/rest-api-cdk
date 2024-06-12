@@ -7,7 +7,7 @@ from rest_api_cdk.rest_api_stack import RestApiStack
 
 
 app = cdk.App()
-RestApiStack(app, "ApiTestCdkStack",
+RestApiStack(app, "rest-api-cdk-stack",
     # If you don't specify 'env', this stack will be environment-agnostic.
     # Account/Region-dependent features and context lookups will not work,
     # but a single synthesized template can be deployed anywhere.
